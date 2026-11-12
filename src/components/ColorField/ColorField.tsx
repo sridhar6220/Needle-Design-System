@@ -10,6 +10,9 @@ const HEX = /^#([0-9a-f]{6})$/i;
 const PRESETS = ["#741FF3", "#1548FF", "#0E7C86", "#1F6F5C", "#4BAA00", "#B8863E", "#FCA026", "#FB6030", "#C0262D", "#E8476A", "#7A4B94", "#131313", "#555555", "#9D9D9D", "#E9E4DA", "#FFFFFF"];
 
 type HSV = { h: number; s: number; v: number };
+/** WCAG relative luminance and contrast ratio. */
+const lum = (hex: string) => { const n = parseInt(hex.slice(1), 16); const c = [n >> 16, (n >> 8) & 255, n & 255].map((x) => { const v = x / 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+export const contrast = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
 function hexToHsv(hex: string): HSV {
   const n = parseInt(hex.slice(1), 16); const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
@@ -31,7 +34,7 @@ function useDrag(onMove: (x: number, y: number) => void) {
 }
 
 /** Full colour picker: saturation/brightness area, hue slider, hex, eyedropper and presets. */
-export function ColorPicker({ value, onChange, presets = PRESETS }: { value: string; onChange: (hex: string) => void; presets?: string[] }) {
+export function ColorPicker({ value, onChange, presets = PRESETS, isOk = () => true }: { value: string; onChange: (hex: string) => void; presets?: string[]; isOk?: (hex: string) => boolean }) {
   const [hsv, setHsv] = useState<HSV>(() => hexToHsv(HEX.test(value) ? value : "#741FF3"));
   const last = useRef(value);
   useEffect(() => { if (value !== last.current && HEX.test(value)) { setHsv(hexToHsv(value)); last.current = value; } }, [value]);
@@ -57,33 +60,41 @@ export function ColorPicker({ value, onChange, presets = PRESETS }: { value: str
         </div>
       </div>
       <div className="nd-cp__presets">
-        {presets.map((p) => <button key={p} type="button" aria-label={p} className={cx(p.toLowerCase() === value.toLowerCase() && "is-on")} style={{ background: p }} onClick={() => { setHsv(hexToHsv(p)); last.current = p; onChange(p); }} />)}
+        {presets.map((p) => { const ok = isOk(p); return <button key={p} type="button" disabled={!ok} aria-label={ok ? p : `${p}, too low contrast`} title={ok ? p : "Too light to read on white"} className={cx(p.toLowerCase() === value.toLowerCase() && "is-on", !ok && "is-bad")} style={{ background: p }} onClick={() => { setHsv(hexToHsv(p)); last.current = p; onChange(p); }} />; })}
       </div>
     </div>
   );
 }
 
-export interface ColorFieldProps { value: string; onChange: (hex: string) => void; label?: ReactNode; swatches?: string[]; size?: "sm" | "md"; className?: string; }
+export interface ColorFieldProps {
+  value: string; onChange: (hex: string) => void; label?: ReactNode; swatches?: string[]; size?: "sm" | "md"; className?: string;
+  /** Minimum contrast against `against` (default white). Colours below it are refused with an explanation. */
+  minContrast?: number; against?: string;
+}
 /** Hex input with a swatch that opens the full colour picker. */
-export function ColorField({ value, onChange, label, swatches, size = "md", className }: ColorFieldProps) {
+export function ColorField({ value, onChange: commitOk, label, swatches, size = "md", className, minContrast, against = "#FFFFFF" }: ColorFieldProps) {
   const id = useId(); const wrap = useRef<HTMLDivElement>(null);
   const [draft, setDraft] = useState(value.toUpperCase()); const [open, setOpen] = useState(false);
+  const [bad, setBad] = useState<string>();
+  const isOk = useCallback((hex: string) => !minContrast || contrast(hex, against) >= minContrast, [minContrast, against]);
+  const onChange = (hex: string) => { if (isOk(hex)) { setBad(undefined); commitOk(hex); } else setBad(hex); };
   useEffect(() => setDraft(value.toUpperCase()), [value]);
   useDismiss(wrap, open, useCallback(() => setOpen(false), []));
-  const commit = (v: string) => { const h = v.startsWith("#") ? v : "#" + v; if (HEX.test(h)) onChange(h.toUpperCase()); else setDraft(value.toUpperCase()); };
+  const commit = (v: string) => { const h = (v.startsWith("#") ? v : "#" + v).toUpperCase(); if (HEX.test(h) && isOk(h)) onChange(h); else { if (HEX.test(h)) setBad(h); setDraft(value.toUpperCase()); } };
   return (
     <Field id={id} label={label} className={className}>
       <div className="nd-color__wrap" ref={wrap}>
-        <div className={cx("nd-input", `nd-input--${size}`, "nd-color", open && "is-open")}>
+        <div className={cx("nd-input", `nd-input--${size}`, "nd-color", open && "is-open", bad && "is-error")}>
           <button type="button" className="nd-color__chip" style={{ background: value }} onClick={() => setOpen(!open)} aria-label="Open colour picker" aria-expanded={open} />
           <input id={id} value={draft} maxLength={7} spellCheck={false} onChange={(e) => setDraft(e.target.value)} onFocus={() => setOpen(true)} onBlur={(e) => commit(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") { commit((e.target as HTMLInputElement).value); setOpen(false); } }} />
         </div>
-        {open && <div className="nd-color__pop"><ColorPicker value={value} onChange={onChange} presets={swatches ? [...new Set([...swatches, ...PRESETS])].slice(0, 16) : undefined} /></div>}
+        {open && <div className="nd-color__pop"><ColorPicker value={bad ?? value} onChange={onChange} isOk={isOk} presets={swatches ? [...new Set([...swatches, ...PRESETS])].slice(0, 16) : undefined} /></div>}
       </div>
+      {bad && <p className="nd-field__msg is-error" role="alert">{bad} is too light ({contrast(bad, against).toFixed(1)}:1). Text and buttons in this colour need at least {minContrast}:1 against white. Pick a deeper shade.</p>}
       {swatches && !open && (
         <div className="nd-color__swatches">
-          {swatches.map((s) => <button key={s} type="button" aria-label={s} className={cx(s.toLowerCase() === value.toLowerCase() && "is-on")} style={{ background: s }} onClick={() => onChange(s.toUpperCase())} />)}
+          {swatches.filter(isOk).map((s) => <button key={s} type="button" aria-label={s} className={cx(s.toLowerCase() === value.toLowerCase() && "is-on")} style={{ background: s }} onClick={() => onChange(s.toUpperCase())} />)}
           <button type="button" className="nd-color__more" aria-label="More colours" onClick={() => setOpen(true)} />
         </div>
       )}

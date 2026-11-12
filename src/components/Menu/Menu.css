@@ -18,3 +18,4 @@
 .nd-menu__check { margin-left:auto; }
 .nd-menu__div { height:1px; margin:4px -6px; background:var(--border-subtle); }
 .nd-menu__label { padding:8px 10px 4px; font-size:var(--text-xs); line-height:16px; font-weight:var(--weight-semibold); letter-spacing:.06em; text-transform:uppercase; color:var(--text-tertiary); }
+.nd-menu--float { position:fixed; top:auto; z-index:var(--z-popover, 95); max-height:320px; }
