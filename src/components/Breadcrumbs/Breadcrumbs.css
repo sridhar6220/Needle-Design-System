@@ -1,0 +1,6 @@
+.nd-crumbs ol { display:flex; align-items:center; gap:4px; margin:0; padding:0; list-style:none; }
+.nd-crumbs li { display:flex; align-items:center; gap:4px; font-size:var(--text-md); }
+.nd-crumbs li svg { color:var(--text-tertiary); }
+.nd-crumbs button { border:0; background:transparent; padding:2px 4px; border-radius:4px; color:var(--text-secondary); cursor:pointer; }
+.nd-crumbs button:hover { color:var(--text); background:var(--bg-hover); }
+.nd-crumbs [aria-current] { color:var(--text); font-weight:var(--weight-medium); padding:2px 4px; }

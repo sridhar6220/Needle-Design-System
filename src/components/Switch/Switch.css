@@ -1,0 +1,11 @@
+.nd-switch { --w:36px; --h:20px; position:relative; flex:none; width:var(--w); height:var(--h); padding:0; border:0; border-radius:var(--radius-pill); background:var(--grey-300); cursor:pointer; transition: background var(--dur) var(--ease-out), box-shadow var(--dur); }
+[data-theme="dark"] .nd-switch { background:#3a3a43; }
+.nd-switch--sm { --w:28px; --h:16px; }
+.nd-switch span { position:absolute; top:2px; left:2px; width:calc(var(--h) - 4px); height:calc(var(--h) - 4px); border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition: transform var(--dur-slow) var(--ease-spring); }
+.nd-switch.is-on { background:var(--accent); }
+.nd-switch.is-on span { transform: translateX(calc(var(--w) - var(--h))); }
+.nd-switch:focus-visible { box-shadow:var(--focus-ring); }
+.nd-switch:disabled { opacity:.45; cursor:not-allowed; }
+.nd-switch-row { display:inline-flex; align-items:center; gap:10px; font-size:var(--text-md); color:var(--text); cursor:pointer; }
+.nd-switch-row.is-left { justify-content:space-between; width:100%; }
+.nd-switch-row.is-disabled { color:var(--text-disabled); cursor:not-allowed; }

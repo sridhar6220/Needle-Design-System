@@ -1,0 +1,15 @@
+.nd-check, .nd-radio { display:inline-flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:var(--text-md); line-height:20px; color:var(--text); }
+.nd-check.is-disabled, .nd-radio.is-disabled { cursor:not-allowed; color:var(--text-disabled); }
+.nd-check__text, .nd-radio__text { display:flex; flex-direction:column; }
+.nd-check__text small, .nd-radio__text small { font-size:var(--text-sm); color:var(--text-secondary); }
+.nd-check__box { position:relative; flex:none; width:18px; height:18px; margin-top:1px; }
+.nd-check__box input { position:absolute; inset:0; margin:0; appearance:none; border:1.5px solid var(--border-input-hover); border-radius:5px; background:var(--bg-surface); cursor:inherit;
+  transition: background var(--dur), border-color var(--dur), box-shadow var(--dur); }
+.nd-check:hover .nd-check__box input:not(:disabled) { border-color:var(--accent); }
+.nd-check__box input:checked { background:var(--accent); border-color:var(--accent); }
+.nd-check__box input:focus-visible { box-shadow:var(--focus-ring); }
+.nd-check__box input:disabled { background:var(--bg-muted); border-color:var(--border); }
+.nd-check__box input:checked:disabled { background:var(--accent-disabled); border-color:transparent; }
+.nd-check__box svg { position:absolute; inset:0; pointer-events:none; }
+.nd-check__box path { fill:none; stroke:#fff; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:12; stroke-dashoffset:12; transition: stroke-dashoffset var(--dur) var(--ease-out); }
+.nd-check__box input:checked + svg path { stroke-dashoffset:0; }

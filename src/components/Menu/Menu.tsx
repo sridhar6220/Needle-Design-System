@@ -1,0 +1,57 @@
+import { useCallback, useEffect, useRef, useState, type ReactElement, type ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import { Check } from "lucide-react";
+import { Icon } from "../../icons/Icon";
+import { useDismiss } from "./useDismiss";
+import { cx } from "../../utils";
+import "./Menu.css";
+
+export type MenuEntry =
+  | { type?: "item"; key: string; label: ReactNode; icon?: LucideIcon; danger?: boolean; disabled?: boolean; selected?: boolean; hint?: ReactNode; onSelect?: () => void }
+  | { type: "divider"; key: string }
+  | { type: "label"; key: string; label: ReactNode };
+export interface MenuProps {
+  trigger: (p: { open: boolean; toggle: () => void; props: Record<string, unknown> }) => ReactElement;
+  items: MenuEntry[]; align?: "start" | "end"; width?: number | string; placement?: "bottom" | "top"; className?: string;
+}
+/** Dropdown menu (DS "Dropdown"). Arrow keys move, Enter selects, Escape closes. */
+export function Menu({ trigger, items, align = "start", width = 220, placement = "bottom", className }: MenuProps) {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+  const wrap = useRef<HTMLDivElement>(null);
+  const close = useCallback(() => { setOpen(false); setActive(-1); }, []);
+  useDismiss(wrap, open, close);
+  const actionable = items.map((it, i) => ((it.type ?? "item") === "item" && !(it as { disabled?: boolean }).disabled ? i : -1)).filter((i) => i >= 0);
+  useEffect(() => { if (open) setActive(actionable[0] ?? -1); }, [open]); // eslint-disable-line
+  const onKey = (e: React.KeyboardEvent) => {
+    if (!open) { if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen(true); } return; }
+    const pos = actionable.indexOf(active);
+    if (e.key === "ArrowDown") { e.preventDefault(); setActive(actionable[(pos + 1) % actionable.length]); }
+    if (e.key === "ArrowUp") { e.preventDefault(); setActive(actionable[(pos - 1 + actionable.length) % actionable.length]); }
+    if (e.key === "Enter") { e.preventDefault(); const it = items[active]; if (it && (it.type ?? "item") === "item") { (it as { onSelect?: () => void }).onSelect?.(); close(); } }
+    if (e.key === "Tab") close();
+  };
+  return (
+    <div ref={wrap} className={cx("nd-menuwrap", className)} onKeyDown={onKey}>
+      {trigger({ open, toggle: () => setOpen((o) => !o), props: { "aria-haspopup": "menu", "aria-expanded": open } })}
+      {open && (
+        <div role="menu" className={cx("nd-menu", `nd-menu--${align}`, `nd-menu--${placement}`)} style={{ width }}>
+          {items.map((it, i) => {
+            if (it.type === "divider") return <div key={it.key} className="nd-menu__div" role="separator" />;
+            if (it.type === "label") return <div key={it.key} className="nd-menu__label">{it.label}</div>;
+            return (
+              <button key={it.key} type="button" role="menuitem" disabled={it.disabled} onMouseEnter={() => setActive(i)}
+                className={cx("nd-menu__item", i === active && "is-active", it.danger && "is-danger", it.selected && "is-selected")}
+                onClick={() => { it.onSelect?.(); close(); }}>
+                {it.icon && <Icon icon={it.icon} size={16} />}
+                <span className="nd-menu__text">{it.label}</span>
+                {it.hint && <span className="nd-menu__hint">{it.hint}</span>}
+                {it.selected && <Icon icon={Check} size={16} className="nd-menu__check" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,26 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Needle
+
+**Vajro's web design system**, rebuilt as code from the original 2023 Figma library. It powers the [Vajro App Builder prototype](https://github.com/sridhar6220/Vajro).
+
+Designed and directed by **Sridhar Swaminathan** · [sridharsniper.com](https://www.sridharsniper.com)
+
+## What's inside
+
+- **Foundations:** colour (7 ramps + semantic tokens for light and dark), Poppins type scale, radius, elevation, icons
+- **Components:** Button, IconButton, TextField, SearchField, TextArea, Select, Checkbox, Radio, Switch, SegmentedControl, Tabs, Menu, Modal, Toast, Badge, Tag, Tooltip, Avatar, Banner, NavItem, Breadcrumbs, EmptyState, SelectCard, ColorField, Slider, Spinner
+
+Use the **Theme** button in the toolbar to switch light, dark, or see both side by side.
+
+## What changed from the 2023 file
+
+1. **One grey scale.** The DS sheet and the shipped screens used two different greys. They're merged into a single neutral ramp.
+2. **Naming fixed.** Secondary and tertiary swatches were layer-named `Primary/*`. Now `yellow`, `orange` and `grey`.
+3. **Warning** maps to the yellow palette (the file had warning labels but no warning colours).
+4. **Softer inputs.** 1px grey borders instead of solid black, with a purple focus ring.
+5. **Dark theme** added at the token layer, so components needed no dark-specific styles.
+6. **Empty states** designed from scratch (the section was blank).
+7. **Motion:** sliding tab and segment indicators, springy switches, toasts that rise in.

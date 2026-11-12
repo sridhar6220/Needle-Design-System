@@ -1,0 +1,4 @@
+.nd-spinner { display:inline-flex; color: currentColor; }
+.nd-spinner svg { animation: nd-spin .8s linear infinite; }
+.nd-spinner circle { fill:none; stroke:currentColor; stroke-width:2.5; stroke-linecap:round; stroke-dasharray:44 60; }
+@keyframes nd-spin { to { transform: rotate(360deg); } }

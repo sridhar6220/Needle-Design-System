@@ -1,0 +1,11 @@
+.nd-modal__backdrop { position:fixed; inset:0; z-index:var(--z-modal); display:grid; place-items:center; padding:24px; background:var(--bg-overlay); backdrop-filter: blur(2px); animation: nd-fade var(--dur) var(--ease-out); }
+@keyframes nd-fade { from { opacity:0; } }
+.nd-modal { width:100%; max-height:calc(100vh - 48px); display:flex; flex-direction:column; background:var(--bg-surface); border-radius:var(--radius-xl); box-shadow:var(--shadow-lg); overflow:hidden;
+  animation: nd-rise var(--dur-slow) var(--ease-out); color:var(--text); }
+@keyframes nd-rise { from { opacity:0; transform: translateY(12px) scale(.98); } }
+.nd-modal--sm { max-width:480px; } .nd-modal--md { max-width:640px; } .nd-modal--lg { max-width:880px; }
+.nd-modal__head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:20px 20px 0 24px; }
+.nd-modal__title { margin:0; font-size:var(--text-lg); line-height:24px; font-weight:var(--weight-semibold); }
+.nd-modal__desc { margin:6px 0 0; font-size:var(--text-md); line-height:22px; color:var(--text-secondary); }
+.nd-modal__body { padding:20px 24px; overflow:auto; }
+.nd-modal__foot { display:flex; justify-content:flex-end; gap:8px; padding:16px 24px; border-top:1px solid var(--border-subtle); background:var(--bg-subtle); }

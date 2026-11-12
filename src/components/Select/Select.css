@@ -1,0 +1,9 @@
+.nd-select { display:flex; width:100%; }
+.nd-select__btn { width:100%; justify-content:space-between; cursor:pointer; text-align:left; }
+.nd-select__btn.is-open { border-color:var(--accent); box-shadow:var(--focus-ring); }
+.nd-select__btn:disabled { cursor:not-allowed; color:var(--text-disabled); }
+.nd-select__val { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:inherit; }
+.nd-input--md .nd-select__val { font-size:var(--text-md); } .nd-input--sm .nd-select__val { font-size:var(--text-sm); }
+.nd-select__val.is-ph { color:var(--text-placeholder); }
+.nd-select__chev { color:var(--text-secondary); transition: transform var(--dur) var(--ease-out); }
+.nd-select__btn.is-open .nd-select__chev { transform: rotate(180deg); }

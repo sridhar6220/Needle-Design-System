@@ -1,0 +1,134 @@
+/* Needle tokens. Primitives come from the Vajro DS file; semantic tokens map them per theme.
+   Changes vs. the 2023 file: one neutral scale (screens and DS sheet used two different greys),
+   warning maps to the yellow (secondary) palette, a dark theme was added. */
+:root {
+  /* Primary · purple (brand) */
+  --purple-50:#f1e7fe; --purple-100:#d9c3fb; --purple-200:#bf9bf9; --purple-300:#a46ff8; --purple-400:#8d4bf6;
+  --purple-500:#741ff3; --purple-600:#681aec; --purple-700:#560ce4; --purple-800:#4300de; --purple-900:#1d00d0;
+  /* Secondary · yellow (also warning) */
+  --yellow-50:#fff8e2; --yellow-100:#ffecb6; --yellow-200:#ffdf88; --yellow-300:#ffd45a; --yellow-400:#ffc93c;
+  --yellow-500:#fec02d; --yellow-600:#fdb329; --yellow-700:#fca026; --yellow-800:#fb9024; --yellow-900:#fa721f;
+  /* Tertiary · orange */
+  --orange-50:#fbe7e5; --orange-100:#ffc7b6; --orange-200:#fea386; --orange-300:#fc7e56; --orange-400:#fb6030;
+  --orange-500:#f84303; --orange-600:#ee3d00; --orange-700:#e03600; --orange-800:#d22f00; --orange-900:#b92000;
+  /* Neutral · unified from the DS sheet and the shipped screens */
+  --grey-0:#ffffff; --grey-25:#fafafa; --grey-50:#f6f6f6; --grey-100:#eeeeee; --grey-150:#e3e3e3; --grey-200:#d1d1d1;
+  --grey-300:#c3c3c3; --grey-400:#acacac; --grey-500:#7b7b7b; --grey-600:#646464; --grey-700:#434343;
+  --grey-800:#262626; --grey-900:#131313; --grey-1000:#000000;
+  /* Status */
+  --green-50:#f0fae6; --green-100:#d9f1c0; --green-200:#bfe896; --green-500:#74cf00; --green-700:#4baa00; --green-800:#309600;
+  --red-50:#ffe8ef; --red-100:#ffc6d3; --red-200:#f98c99; --red-400:#ff154d; --red-500:#ff0030; --red-700:#e5002a;
+  --blue-50:#e9eaff; --blue-100:#c8caff; --blue-200:#a0a8ff; --blue-400:#4d67ff; --blue-500:#1548ff; --blue-700:#0032e6;
+
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Type scale (size/line-height), taken from what the screens actually use */
+  --text-xs: 10px; --lh-xs: 16px; --text-sm: 12px; --lh-sm: 20px; --text-md: 14px; --lh-md: 20px;
+  --text-lg: 16px; --lh-lg: 24px; --text-xl: 20px; --lh-xl: 32px; --text-2xl: 24px; --lh-2xl: 36px;
+  --text-3xl: 32px; --lh-3xl: 48px; --text-4xl: 56px; --lh-4xl: 84px;
+  --weight-light:300; --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700;
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+  --radius-xs:4px; --radius-sm:6px; --radius-md:8px; --radius-lg:12px; --radius-xl:16px; --radius-2xl:24px; --radius-pill:999px;
+  --ease-out: cubic-bezier(.2,.8,.2,1); --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --dur-fast:120ms; --dur:180ms; --dur-slow:280ms;
+  --z-dropdown:40; --z-overlay:60; --z-modal:70; --z-toast:80; --z-tooltip:90;
+}
+
+/* Light (default) */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg-canvas: var(--grey-0);
+  --bg-app: var(--grey-50);
+  --bg-surface: var(--grey-0);
+  --bg-subtle: var(--grey-50);
+  --bg-muted: var(--grey-100);
+  --bg-hover: rgba(19,19,19,.05);
+  --bg-pressed: rgba(19,19,19,.09);
+  --bg-inverse: var(--grey-900);
+  --bg-overlay: rgba(19,19,24,.48);
+
+  --text: var(--grey-900);
+  --text-secondary: var(--grey-600);
+  --text-tertiary: var(--grey-400);
+  --text-placeholder: var(--grey-300);
+  --text-disabled: var(--grey-300);
+  --text-inverse: var(--grey-0);
+  --text-on-accent: #ffffff;
+
+  --border: var(--grey-150);
+  --border-subtle: var(--grey-100);
+  --border-strong: var(--grey-200);
+  --border-input: var(--grey-200);
+  --border-input-hover: var(--grey-400);
+
+  --accent: var(--purple-500);
+  --accent-hover: var(--purple-600);
+  --accent-pressed: var(--purple-700);
+  --accent-text: var(--purple-500);
+  --accent-soft: var(--purple-50);
+  --accent-soft-hover: #e7d6fd;
+  --accent-border: var(--purple-100);
+  --accent-disabled: var(--purple-100);
+  --focus-ring: 0 0 0 3px rgba(116,31,243,.22);
+
+  --success-bg: var(--green-50); --success-border: var(--green-200); --success-text: var(--green-800); --success-solid: var(--green-700);
+  --warning-bg: var(--yellow-50); --warning-border: var(--yellow-200); --warning-text: #8a5a00; --warning-solid: var(--yellow-500);
+  --error-bg: var(--red-50); --error-border: var(--red-100); --error-text: var(--red-700); --error-solid: var(--red-400);
+  --info-bg: var(--blue-50); --info-border: var(--blue-100); --info-text: var(--blue-700); --info-solid: var(--blue-500);
+  --required: var(--orange-400);
+
+  --shadow-xs: 0 1px 2px rgba(19,19,19,.06);
+  --shadow-sm: 0 1px 3px rgba(19,19,19,.08), 0 1px 2px rgba(19,19,19,.04);
+  --shadow-md: 0 8px 16px -4px rgba(19,19,19,.10), 0 2px 6px rgba(19,19,19,.05);
+  --shadow-lg: 0 20px 40px -12px rgba(18,52,77,.22), 0 4px 12px rgba(18,52,77,.06);
+  --shadow-device: 0 40px 80px -24px rgba(19,19,19,.28), 0 12px 24px -8px rgba(19,19,19,.10);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-canvas: #0e0e11;
+  --bg-app: #0a0a0c;
+  --bg-surface: #16161a;
+  --bg-subtle: #1b1b20;
+  --bg-muted: #232329;
+  --bg-hover: rgba(255,255,255,.06);
+  --bg-pressed: rgba(255,255,255,.10);
+  --bg-inverse: #f1f1f4;
+  --bg-overlay: rgba(0,0,0,.6);
+
+  --text: #f1f1f4;
+  --text-secondary: #a3a3ae;
+  --text-tertiary: #6f6f7a;
+  --text-placeholder: #5c5c66;
+  --text-disabled: #4c4c55;
+  --text-inverse: #131313;
+  --text-on-accent: #ffffff;
+
+  --border: #2a2a31;
+  --border-subtle: #212127;
+  --border-strong: #3a3a43;
+  --border-input: #3a3a43;
+  --border-input-hover: #55555f;
+
+  --accent: #8d4bf6;
+  --accent-hover: #a46ff8;
+  --accent-pressed: #7a35f4;
+  --accent-text: #b98cfa;
+  --accent-soft: rgba(141,75,246,.16);
+  --accent-soft-hover: rgba(141,75,246,.24);
+  --accent-border: rgba(164,111,248,.38);
+  --accent-disabled: #3b2a5c;
+  --focus-ring: 0 0 0 3px rgba(164,111,248,.35);
+
+  --success-bg: rgba(116,207,0,.12); --success-border: rgba(116,207,0,.3); --success-text: #9fe05a; --success-solid: #74cf00;
+  --warning-bg: rgba(254,192,45,.12); --warning-border: rgba(254,192,45,.3); --warning-text: #ffd45a; --warning-solid: #fec02d;
+  --error-bg: rgba(255,21,77,.12); --error-border: rgba(255,21,77,.32); --error-text: #ff7c99; --error-solid: #ff154d;
+  --info-bg: rgba(77,103,255,.14); --info-border: rgba(77,103,255,.34); --info-text: #a0a8ff; --info-solid: #4d67ff;
+  --required: var(--orange-300);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5);
+  --shadow-md: 0 8px 20px -4px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
+  --shadow-lg: 0 24px 48px -12px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.05);
+  --shadow-device: 0 40px 80px -24px rgba(0,0,0,.8);
+}

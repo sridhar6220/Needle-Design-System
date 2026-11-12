@@ -1,0 +1,13 @@
+.nd-banner { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-md); border:1px solid; font-size:var(--text-md); line-height:20px; }
+.nd-banner__text { flex:1; min-width:0; color:var(--text); }
+.nd-banner__action { border:0; background:transparent; padding:2px 6px; border-radius:6px; font-weight:var(--weight-medium); color:var(--accent-text); cursor:pointer; }
+.nd-banner__action:hover { background:var(--bg-hover); }
+.nd-banner__x { display:grid; place-items:center; width:24px; height:24px; border:0; border-radius:6px; background:transparent; color:var(--text-secondary); cursor:pointer; }
+.nd-banner__x:hover { background:var(--bg-hover); }
+.nd-banner--soft.nd-banner--info { background:var(--info-bg); border-color:var(--info-border); } .nd-banner--soft.nd-banner--info > svg { color:var(--info-solid); }
+.nd-banner--soft.nd-banner--success { background:var(--success-bg); border-color:var(--success-border); } .nd-banner--soft.nd-banner--success > svg { color:var(--success-solid); }
+.nd-banner--soft.nd-banner--warning { background:var(--warning-bg); border-color:var(--warning-border); } .nd-banner--soft.nd-banner--warning > svg { color:var(--yellow-700); }
+.nd-banner--soft.nd-banner--error { background:var(--error-bg); border-color:var(--error-border); } .nd-banner--soft.nd-banner--error > svg { color:var(--error-solid); }
+.nd-banner--solid { background:var(--yellow-400); border-color:var(--yellow-600); }
+.nd-banner--solid .nd-banner__text, .nd-banner--solid > svg { color:#131313; }
+.nd-banner--solid .nd-banner__action { color:var(--purple-600); }

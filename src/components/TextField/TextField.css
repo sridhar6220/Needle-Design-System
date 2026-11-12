@@ -1,0 +1,28 @@
+.nd-field { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.nd-field__top { display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+.nd-field__label { font-size:var(--text-md); line-height:20px; font-weight:var(--weight-medium); color:var(--text); }
+.nd-field__req { color:var(--required); font-weight:var(--weight-semibold); }
+.nd-field__count { font-size:var(--text-sm); color:var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.nd-field__msg { margin:0; font-size:var(--text-sm); line-height:18px; color:var(--text-secondary); }
+.nd-field__msg.is-error { color:var(--error-text); }
+
+.nd-input { display:flex; align-items:center; gap:8px; height:40px; padding:0 12px; background:var(--bg-surface);
+  border:1px solid var(--border-input); border-radius:var(--radius-md); transition: border-color var(--dur), box-shadow var(--dur), background var(--dur); }
+.nd-input--sm { height:32px; padding:0 10px; border-radius:var(--radius-sm); }
+.nd-input:hover { border-color:var(--border-input-hover); }
+.nd-input:focus-within { border-color:var(--accent); box-shadow:var(--focus-ring); }
+.nd-input.is-error { border-color:var(--error-solid); }
+.nd-input.is-error:focus-within { box-shadow:0 0 0 3px rgba(255,21,77,.16); }
+.nd-input.is-disabled { background:var(--bg-subtle); border-color:var(--border); }
+.nd-input input, .nd-input textarea { flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; padding:0;
+  font-size:var(--text-md); line-height:20px; color:var(--text); caret-color:var(--accent); }
+.nd-input--sm input { font-size:var(--text-sm); }
+.nd-input input::placeholder, .nd-input textarea::placeholder { color:var(--text-placeholder); }
+.nd-input input:disabled, .nd-input textarea:disabled { color:var(--text-disabled); cursor:not-allowed; }
+.nd-input input[type="search"]::-webkit-search-cancel-button { display:none; }
+.nd-input__icon { color:var(--text-secondary); flex:none; }
+.nd-input__suffix { display:flex; align-items:center; color:var(--text-secondary); font-size:var(--text-sm); }
+.nd-input__clear { display:grid; place-items:center; width:20px; height:20px; border:0; border-radius:50%; background:transparent; color:var(--text-secondary); cursor:pointer; }
+.nd-input__clear:hover { background:var(--bg-hover); color:var(--text); }
+.nd-input--area { height:auto; padding:10px 12px; align-items:stretch; }
+.nd-input--area textarea { min-height:96px; resize:vertical; }
