@@ -7,3 +7,22 @@
 .nd-color__swatches button { width:24px; height:24px; border-radius:50%; border:0; cursor:pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); transition: transform var(--dur) var(--ease-spring); }
 .nd-color__swatches button:hover { transform: scale(1.12); }
 .nd-color__swatches button.is-on { box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--accent); }
+.nd-color__wrap { position:relative; }
+.nd-color.is-open { border-color:var(--accent); box-shadow:var(--focus-ring); }
+button.nd-color__chip { padding:0; border:0; }
+.nd-color__more { background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red) !important; }
+.nd-color__pop { position:absolute; z-index:var(--z-dropdown); top:calc(100% + 6px); left:0; width:248px; padding:12px; border-radius:var(--radius-lg); background:var(--bg-surface); border:1px solid var(--border); box-shadow:var(--shadow-md); animation: nd-pop var(--dur) var(--ease-out); }
+.nd-cp { display:flex; flex-direction:column; gap:12px; }
+.nd-cp__area { position:relative; height:140px; border-radius:8px; cursor:crosshair; touch-action:none; }
+.nd-cp__area { background-image: linear-gradient(to top, #000, rgba(0,0,0,0)), linear-gradient(to right, #fff, rgba(255,255,255,0)); }
+.nd-cp__area:focus-visible, .nd-cp__hue:focus-visible { outline:none; box-shadow:var(--focus-ring); }
+.nd-cp__knob { position:absolute; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.3); pointer-events:none; }
+.nd-cp__row { display:flex; align-items:center; gap:10px; }
+.nd-cp__hue { position:relative; flex:1; height:12px; border-radius:6px; cursor:pointer; touch-action:none; background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+.nd-cp__knob--hue { top:50%; }
+.nd-cp__eye { display:grid; place-items:center; width:28px; height:28px; border:1px solid var(--border); border-radius:8px; background:var(--bg-surface); color:var(--text); cursor:pointer; }
+.nd-cp__eye:hover { background:var(--bg-hover); }
+.nd-cp__presets { display:grid; grid-template-columns:repeat(8, 1fr); gap:6px; }
+.nd-cp__presets button { aspect-ratio:1; border:0; border-radius:6px; cursor:pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); transition: transform var(--dur) var(--ease-spring); }
+.nd-cp__presets button:hover { transform: scale(1.12); } .nd-cp__presets button.is-on { box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 3.5px var(--accent); }
+.nd-color__pop { position:static; width:auto; max-width:280px; margin-top:8px; box-shadow:var(--shadow-sm); }
