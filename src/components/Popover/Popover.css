@@ -1,0 +1,4 @@
+.nd-popwrap { position:relative; display:inline-flex; }
+.nd-pop { z-index:var(--z-popover); overflow:auto; background:var(--bg-surface); color:var(--text); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-md);
+  transform-origin: var(--nd-origin, top); animation: nd-pop-in var(--dur) var(--ease-out); }
+@keyframes nd-pop-in { from { opacity:0; transform: scale(.98); } }

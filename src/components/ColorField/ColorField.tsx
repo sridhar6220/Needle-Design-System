@@ -2,6 +2,8 @@ import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 
 import { Pipette } from "lucide-react";
 import { Field } from "../TextField/Field";
 import { useDismiss } from "../Menu/useDismiss";
+import { useFloating } from "../Popover/useFloating";
+import { createPortal } from "react-dom";
 import { cx } from "../../utils";
 import "../TextField/TextField.css";
 import "./ColorField.css";
@@ -73,13 +75,14 @@ export interface ColorFieldProps {
 }
 /** Hex input with a swatch that opens the full colour picker. */
 export function ColorField({ value, onChange: commitOk, label, swatches, size = "md", className, minContrast, against = "#FFFFFF" }: ColorFieldProps) {
-  const id = useId(); const wrap = useRef<HTMLDivElement>(null);
+  const id = useId(); const wrap = useRef<HTMLDivElement>(null); const pop = useRef<HTMLDivElement>(null);
   const [draft, setDraft] = useState(value.toUpperCase()); const [open, setOpen] = useState(false);
+  const popStyle = useFloating(wrap, pop, open, { side: "bottom", align: "start", width: 264 });
   const [bad, setBad] = useState<string>();
   const isOk = useCallback((hex: string) => !minContrast || contrast(hex, against) >= minContrast, [minContrast, against]);
   const onChange = (hex: string) => { if (isOk(hex)) { setBad(undefined); commitOk(hex); } else setBad(hex); };
   useEffect(() => setDraft(value.toUpperCase()), [value]);
-  useDismiss(wrap, open, useCallback(() => setOpen(false), []));
+  useDismiss([wrap, pop], open, useCallback(() => setOpen(false), []));
   const commit = (v: string) => { const h = (v.startsWith("#") ? v : "#" + v).toUpperCase(); if (HEX.test(h) && isOk(h)) onChange(h); else { if (HEX.test(h)) setBad(h); setDraft(value.toUpperCase()); } };
   return (
     <Field id={id} label={label} className={className}>
@@ -89,10 +92,10 @@ export function ColorField({ value, onChange: commitOk, label, swatches, size = 
           <input id={id} value={draft} maxLength={7} spellCheck={false} onChange={(e) => setDraft(e.target.value)} onFocus={() => setOpen(true)} onBlur={(e) => commit(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") { commit((e.target as HTMLInputElement).value); setOpen(false); } }} />
         </div>
-        {open && <div className="nd-color__pop"><ColorPicker value={bad ?? value} onChange={onChange} isOk={isOk} presets={swatches ? [...new Set([...swatches, ...PRESETS])].slice(0, 16) : undefined} /></div>}
+        {open && createPortal(<div ref={pop} className="nd-color__pop" style={popStyle} role="dialog" aria-label="Colour picker"><ColorPicker value={bad ?? value} onChange={onChange} isOk={isOk} presets={swatches ? [...new Set([...swatches, ...PRESETS])].slice(0, 16) : undefined} /></div>, document.body)}
       </div>
       {bad && <p className="nd-field__msg is-error" role="alert">{bad} is too light ({contrast(bad, against).toFixed(1)}:1). Text and buttons in this colour need at least {minContrast}:1 against white. Pick a deeper shade.</p>}
-      {swatches && !open && (
+      {swatches && (
         <div className="nd-color__swatches">
           {swatches.filter(isOk).map((s) => <button key={s} type="button" aria-label={s} className={cx(s.toLowerCase() === value.toLowerCase() && "is-on")} style={{ background: s }} onClick={() => onChange(s.toUpperCase())} />)}
           <button type="button" className="nd-color__more" aria-label="More colours" onClick={() => setOpen(true)} />

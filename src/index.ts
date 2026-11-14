@@ -25,3 +25,5 @@ export * from "./components/EmptyState/EmptyState";
 export * from "./components/SelectCard/SelectCard";
 export * from "./components/ColorField/ColorField";
 export * from "./components/Slider/Slider";
+export * from "./components/Popover/Popover";
+export * from "./components/Popover/useFloating";

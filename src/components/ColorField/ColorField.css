@@ -25,6 +25,6 @@ button.nd-color__chip { padding:0; border:0; }
 .nd-cp__presets { display:grid; grid-template-columns:repeat(8, 1fr); gap:6px; }
 .nd-cp__presets button { aspect-ratio:1; border:0; border-radius:6px; cursor:pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); transition: transform var(--dur) var(--ease-spring); }
 .nd-cp__presets button:hover { transform: scale(1.12); } .nd-cp__presets button.is-on { box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 3.5px var(--accent); }
-.nd-color__pop { position:static; width:auto; max-width:280px; margin-top:8px; box-shadow:var(--shadow-sm); }
+.nd-color__pop { z-index:var(--z-popover); box-shadow:var(--shadow-md); overflow:visible; }
 .nd-cp__presets button.is-bad { cursor:not-allowed; opacity:.55; background-image: linear-gradient(135deg, transparent 46%, #e5002a 46%, #e5002a 54%, transparent 54%) !important; background-blend-mode:normal; }
 .nd-cp__presets button.is-bad:hover { transform:none; }

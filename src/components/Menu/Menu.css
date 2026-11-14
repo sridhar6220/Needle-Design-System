@@ -19,3 +19,8 @@
 .nd-menu__div { height:1px; margin:4px -6px; background:var(--border-subtle); }
 .nd-menu__label { padding:8px 10px 4px; font-size:var(--text-xs); line-height:16px; font-weight:var(--weight-semibold); letter-spacing:.06em; text-transform:uppercase; color:var(--text-tertiary); }
 .nd-menu--float { position:fixed; top:auto; z-index:var(--z-popover, 95); max-height:320px; }
+.nd-menu--float { animation-name: nd-pop-in; transform-origin: var(--nd-origin, top); }
+@keyframes nd-pop-in { from { opacity:0; transform: scale(.98); } }
+.nd-menu__text small { display:block; margin-top:1px; font-size:var(--text-sm); line-height:16px; color:var(--text-tertiary); white-space:normal; }
+.nd-menu__item:has(small) { align-items:flex-start; } .nd-menu__item:has(small) > svg { margin-top:2px; }
+.nd-menu__text { white-space:normal; }
