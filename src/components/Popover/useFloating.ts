@@ -18,7 +18,7 @@ export function useFloating(anchor: RefObject<HTMLElement | null>, floating: Ref
     const place = () => {
       const a = anchor.current?.getBoundingClientRect(); const f = floating.current; if (!a || !f) return;
       const vw = window.innerWidth, vh = window.innerHeight, m = 8;
-      const w = width === "anchor" ? a.width : typeof width === "number" ? width : f.offsetWidth;
+      const w = width === "anchor" ? Math.max(a.width, Math.min(f.offsetWidth, 360)) : typeof width === "number" ? width : f.offsetWidth;
       const natural = f.scrollHeight; const h = Math.min(natural, maxHeight ?? natural);
       let s: Side = side;
       if (s === "bottom" && a.bottom + offset + h > vh - m && a.top - offset - h > a.bottom) s = "top";
@@ -33,7 +33,7 @@ export function useFloating(anchor: RefObject<HTMLElement | null>, floating: Ref
       const room = s === "bottom" ? vh - top - m : s === "top" ? a.top - offset - m : vh - 2 * m;
       top = Math.max(m, Math.min(top, vh - Math.min(h, room) - m));
       setStyle({
-        position: "fixed", top, left, width: width === "auto" ? undefined : w, maxHeight: Math.min(maxHeight ?? Infinity, room),
+        position: "fixed", top, left, width: width === "auto" ? undefined : w, minWidth: width === "anchor" ? a.width : undefined, maxHeight: Math.min(maxHeight ?? Infinity, room),
         ["--nd-origin" as string]: s === "bottom" ? "top" : s === "top" ? "bottom" : s === "right" ? "left" : "right",
         ["--nd-anchor-y" as string]: `${a.top + a.height / 2 - top}px`,
       });

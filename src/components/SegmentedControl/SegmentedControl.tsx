@@ -9,7 +9,7 @@ export function SegmentedControl({ options, value, onChange, size = "md", fullWi
   const [thumb, setThumb] = useState<{ left: number; width: number } | null>(null);
   useLayoutEffect(() => {
     const el = ref.current?.querySelector<HTMLButtonElement>(`[data-value="${CSS.escape(value)}"]`);
-    if (el) setThumb({ left: el.offsetLeft, width: el.offsetWidth });
+    setThumb(el ? { left: el.offsetLeft, width: el.offsetWidth } : null); // no match: nothing selected
   }, [value, options.length]);
   return (
     <div ref={ref} role="radiogroup" aria-label={ariaLabel} className={cx("nd-seg", `nd-seg--${size}`, fullWidth && "nd-seg--full", className)}>

@@ -20,7 +20,9 @@ export function Tabs({ items, value, onChange, className, size = "md" }: TabsPro
     <div ref={ref} role="tablist" className={cx("nd-tabs", `nd-tabs--${size}`, className)}>
       {items.map((t, i) => (
         <button key={t.value} role="tab" type="button" data-value={t.value} aria-selected={t.value === value} tabIndex={t.value === value ? 0 : -1}
-          className={cx("nd-tab", t.value === value && "is-on")} onClick={() => onChange(t.value)} onKeyDown={(e) => onKey(e, i)}>
+          className={cx("nd-tab", t.value === value && "is-on")} onClick={() => onChange(t.value)} onKeyDown={(e) => onKey(e, i)}
+          /* Mouse clicks don't take focus, so the keyboard focus ring never lingers as a fake "pressed" state */
+          onMouseDown={(e) => e.preventDefault()}>
           {t.label}{t.badge}
         </button>
       ))}

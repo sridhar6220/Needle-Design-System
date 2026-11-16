@@ -3,7 +3,8 @@
 .nd-scard--stack { flex-direction:column; align-items:center; text-align:center; padding:28px 24px 24px; }
 .nd-scard--row { align-items:center; }
 .nd-scard:hover:not(:disabled) { border-color:var(--border-input-hover); box-shadow:var(--shadow-sm); }
-.nd-scard.is-on { border-color:var(--accent); background: color-mix(in srgb, var(--accent-soft) 40%, var(--bg-surface)); box-shadow: 0 0 0 1px var(--accent); }
+.nd-scard.is-on { border-color:var(--accent); }
+.nd-scard.is-on:hover:not(:disabled) { border-color:var(--accent); }
 .nd-scard:focus-visible { box-shadow:var(--focus-ring); }
 .nd-scard:disabled { opacity:.5; cursor:not-allowed; }
 .nd-scard__mark { position:absolute; top:16px; right:16px; }
