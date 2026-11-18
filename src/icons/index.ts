@@ -12,7 +12,7 @@ export { AlertTriangle, Apple, ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ArrowU
 export const AlertCircle = asLucide(craftwork("Attention"));
 export const AlignLeft = asLucide(craftwork("Left align"));
 export const Banknote = asLucide(craftwork("Money"));
-export const BarChart3 = asLucide(craftwork("Horizontal align left"));
+export const BarChart3 = asLucide(craftwork("Vertical align bottom"));
 export const BatteryFull = asLucide(craftwork("Battery"));
 export const Bell = asLucide(craftwork("Notifications"));
 export const BellRing = asLucide(craftwork("Notifications"));
