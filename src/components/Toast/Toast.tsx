@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import "./Toast.css";
 export type ToastTone = "success" | "error" | "warning" | "info";

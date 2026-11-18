@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Pipette } from "lucide-react";
+import { Pipette } from "../../icons";
 import { Field } from "../TextField/Field";
 import { useDismiss } from "../Menu/useDismiss";
 import { useFloating } from "../Popover/useFloating";

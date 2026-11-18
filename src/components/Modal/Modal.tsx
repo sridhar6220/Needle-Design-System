@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { X } from "../../icons";
 import { IconButton } from "../Button/Button";
 import { cx } from "../../utils";
 import "./Modal.css";

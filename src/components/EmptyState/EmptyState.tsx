@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { cx } from "../../utils";
 import "./EmptyState.css";

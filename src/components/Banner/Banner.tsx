@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { cx } from "../../utils";
 import "./Banner.css";

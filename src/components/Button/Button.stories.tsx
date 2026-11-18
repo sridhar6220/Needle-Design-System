@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Plus, Heart, Eye, Bell, Repeat, ArrowRight } from "lucide-react";
+import { Plus, Heart, Eye, Bell, Repeat, ArrowRight } from "../../icons";
 import { Button, IconButton } from "./Button";
 const meta: Meta<typeof Button> = {
   title: "Components/Button", component: Button, tags: ["autodocs"],

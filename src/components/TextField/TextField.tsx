@@ -1,6 +1,6 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from "react";
-import type { LucideIcon } from "lucide-react";
-import { Search, X } from "lucide-react";
+import type { LucideIcon } from "../../icons";
+import { Search, X } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { Field } from "./Field";
 import { cx } from "../../utils";

@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import "./Breadcrumbs.css";
 export interface Crumb { label: string; onClick?: () => void; }

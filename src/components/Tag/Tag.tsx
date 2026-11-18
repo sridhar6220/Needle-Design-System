@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { X } from "lucide-react";
+import { X } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { cx } from "../../utils";
 import "./Tag.css";

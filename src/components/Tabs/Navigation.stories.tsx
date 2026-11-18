@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Home, Smartphone, Settings, LayoutGrid } from "lucide-react";
+import { Home, Smartphone, Settings, LayoutGrid } from "../../icons";
 import { Tabs } from "./Tabs";
 import { NavItem } from "../NavItem/NavItem";
 import { Breadcrumbs } from "../Breadcrumbs/Breadcrumbs";
 import { Menu } from "../Menu/Menu";
 import { Button } from "../Button/Button";
-import { ChevronDown, Copy, Edit, Eye, Trash2, Send } from "lucide-react";
+import { ChevronDown, Copy, Edit, Eye, Trash2, Send } from "../../icons";
 const meta: Meta = { title: "Components/Navigation", parameters: { layout: "padded" } };
 export default meta;
 type S = StoryObj;

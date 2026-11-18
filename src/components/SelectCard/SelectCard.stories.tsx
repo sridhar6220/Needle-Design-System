@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Rocket, Building2 } from "lucide-react";
+import { Rocket, Building2 } from "../../icons";
 import { SelectCard } from "./SelectCard";
 import { Icon } from "../../icons/Icon";
 const meta: Meta = { title: "Components/SelectCard", parameters: { layout: "padded" } };

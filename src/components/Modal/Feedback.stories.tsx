@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Inbox, Smartphone } from "lucide-react";
+import { Inbox, Smartphone } from "../../icons";
 import { Modal } from "./Modal";
 import { Button } from "../Button/Button";
 import { TextField, TextArea } from "../TextField/TextField";

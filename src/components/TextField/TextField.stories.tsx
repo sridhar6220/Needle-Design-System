@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { Link2 } from "lucide-react";
+import { Link2 } from "../../icons";
 import { TextField, SearchField, TextArea } from "./TextField";
 import { Select } from "../Select/Select";
 const meta: Meta = { title: "Components/Inputs", parameters: { layout: "padded" } };

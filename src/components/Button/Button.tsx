@@ -1,5 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { Spinner } from "../Spinner/Spinner";
 import { cx } from "../../utils";

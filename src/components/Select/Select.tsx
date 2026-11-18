@@ -1,5 +1,5 @@
 import { useId, type ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { Menu } from "../Menu/Menu";
 import { Field } from "../TextField/Field";

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type ReactElement, type ReactNode } from "react";
 import { useFloating } from "../Popover/useFloating";
 import { createPortal } from "react-dom";
-import type { LucideIcon } from "lucide-react";
-import { Check } from "lucide-react";
+import type { LucideIcon } from "../../icons";
+import { Check } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { useDismiss } from "./useDismiss";
 import { cx } from "../../utils";

@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
-import type { LucideIcon } from "lucide-react";
-import { ChevronDown } from "lucide-react";
+import type { LucideIcon } from "../../icons";
+import { ChevronDown } from "../../icons";
 import { Icon } from "../../icons/Icon";
 import { cx } from "../../utils";
 import "./NavItem.css";
@@ -10,7 +10,7 @@ export function NavItem({ icon, active, expandable, expanded, sub, trailing, chi
   return (
     <button type="button" aria-current={active ? "page" : undefined} aria-expanded={expandable ? !!expanded : undefined}
       className={cx("nd-nav", active && "is-active", sub && "is-sub", className)} {...rest}>
-      {icon && <Icon icon={icon} size={20} />}
+      {icon && <Icon icon={icon} size={20} filled={active} />}
       <span className="nd-nav__label">{children}</span>
       {trailing}
       {expandable && <Icon icon={ChevronDown} size={16} className={cx("nd-nav__chev", expanded && "is-open")} />}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import * as L from "lucide-react";
+import * as L from "../icons";
 import { Icon } from "../icons/Icon";
 import "./foundations.css";
 
@@ -67,13 +67,23 @@ export const RadiusAndElevation: S = {
   ),
 };
 
-const iconNames = ["ArrowDown","ArrowUp","ArrowLeft","ArrowRight","User","Users","UserMinus","UserPlus","UserCheck","UserX","BellOff","Trash2","ChevronRight","ChevronDown","ChevronLeft","ChevronUp","TrendingDown","TrendingUp","Maximize","Maximize2","HelpCircle","Truck","ShoppingCart","ShoppingBag","MessageSquare","Search","Eye","Bell","Lock","Unlock","Camera","Video","Mic","Film","Image","Clock","ExternalLink","Volume2","Filter","Share","Upload","Download","LogIn","LogOut","Smartphone","Flag","CreditCard","Star","Gift","PenTool","File","FileText","Bookmark","Headphones","MapPin","Calendar","Settings","Move","ThumbsUp","ThumbsDown","Phone","Globe","Edit","Crop","Tag","Home","Heart","Mail","Clipboard","Link2","Award","Plus","Grid","AlertTriangle","XCircle","X","Info","Check","MoreHorizontal","Repeat","GripVertical","Copy","Layers","Undo2","Redo2"] as const;
-export const Icons: S = {
-  render: () => (
+const LUCIDE_PRIMITIVES = ["Check", "X", "Plus", "Minus", "ChevronDown", "ChevronLeft", "ChevronRight", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Heart", "Info", "TriangleAlert", "MoreHorizontal", "GripVertical", "Truck", "Gift", "TrendingUp", "TrendingDown", "ExternalLink", "Undo2", "Redo2"];
+const CATS = [...new Set(L.CRAFTWORK_CATALOG.map((c) => c.category))];
+export const Icons: StoryObj<{ variant: L.IconVariant; size: 16 | 20 | 24 }> = {
+  args: { variant: "stroke", size: 20 },
+  argTypes: { variant: { control: "inline-radio", options: ["stroke", "fill"] }, size: { control: "inline-radio", options: [16, 20, 24] } },
+  render: ({ variant, size }) => (
     <div className="fd">
       <h1>Icons</h1>
-      <p className="fd-lead">Feather-style strokes via <code>lucide-react</code>, matching the DS set 1:1. Stroke follows the DS grid: 12px → 1, 16px → 1.3, 20px → 1.6.</p>
-      <div className="fd-icons">{iconNames.map((n) => { const I = (L as unknown as Record<string, L.LucideIcon>)[n]; return I ? <div key={n}><Icon icon={I} size={20} /><small>{n}</small></div> : null; })}</div>
+      <p className="fd-lead">Craftwork Free SVG Icons, {L.CRAFTWORK_CATALOG.length} glyphs in two styles. Use stroke by default and fill for pressed, selected and active states (<code>{"<Icon filled />"}</code> or <code>{'variant="fill"'}</code>). Import as <code>Cw</code> + name, e.g. <code>CwZoom</code>.</p>
+      {CATS.map((cat) => (
+        <section key={cat}><h3 className="fd-h3">{cat}</h3>
+          <div className="fd-icons">{L.CRAFTWORK_CATALOG.filter((c) => c.category === cat).map((c) => { const I = (L as unknown as Record<string, L.CraftworkIcon>)[c.exportName]; return <div key={c.name} title={c.tags}><I size={size} variant={variant} /><small>{c.exportName}</small></div>; })}</div>
+        </section>
+      ))}
+      <h3 className="fd-h3">Primitives (Lucide)</h3>
+      <p className="fd-lead">Craftwork has no check, close, plus, chevrons or arrows, so these come from Lucide on the same 2px line.</p>
+      <div className="fd-icons">{LUCIDE_PRIMITIVES.map((n) => { const I = (L as unknown as Record<string, L.LucideIcon>)[n]; return I ? <div key={n}><Icon icon={I} size={size} filled={variant === "fill"} /><small>{n}</small></div> : null; })}</div>
     </div>
   ),
 };
