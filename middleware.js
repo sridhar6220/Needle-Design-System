@@ -1,6 +1,7 @@
 // Password gate for this Storybook, run by Vercel Routing Middleware.
 // DSM_PASSWORD (set in Vercel) is the password; if it isn't set, the site stays open.
 // DSM_NAME sets the title on the form. The logo comes from gate-logo.js.
+// The password works for 10 minutes; after that the page asks for it again.
 //
 // Share links: once signed in, open /__dsm_share to make a link that works
 // without the password until it expires (1 to 30 days). Every link is signed with
@@ -12,16 +13,11 @@ export const config = { matcher: '/:path*' };
 
 const COOKIE = 'dsm_gate';
 const SHARE_COOKIE = 'dsm_share';
-const MAX_AGE = 60 * 60 * 24 * 30; // owner session: 30 days
+const SESSION = 10 * 60; // the password lets you in for 10 minutes, then it asks again
 const DAY = 60 * 60 * 24;
 const SHARE_DAYS = [1, 3, 7, 14, 30];
 
 const enc = new TextEncoder();
-
-async function sha256(text) {
-  const buf = await crypto.subtle.digest('SHA-256', enc.encode(text));
-  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-}
 
 async function hmac(secret, message) {
   const key = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
@@ -48,6 +44,17 @@ async function checkShareKey(password, value) {
   const valid = equal(await shareKey(password, expires), value);
   if (!valid) return { ok: false };
   return { ok: expires > Date.now() / 1000, expired: expires <= Date.now() / 1000, expires };
+}
+
+// A session looks like "<sign-in time>.<signature>" and only counts for SESSION seconds,
+// checked here on the server, so an old cookie can't keep someone in.
+async function checkSession(password, value) {
+  const m = /^(\d{9,11})\.([A-Za-z0-9_-]{43})$/.exec(value || '');
+  if (!m) return false;
+  const issued = Number(m[1]);
+  const age = Date.now() / 1000 - issued;
+  if (age < 0 || age > SESSION) return false;
+  return equal(`${issued}.${await hmac(`dsm-session:${password}`, String(issued))}`, value);
 }
 
 function safeNext(value) {
@@ -129,20 +136,21 @@ export default async function middleware(request) {
   if (!password) return; // not configured: leave the site open
 
   const name = process.env.DSM_NAME || 'Design system';
-  const token = await sha256(`dsm-gate:${password}`);
   const url = new URL(request.url);
-  const owner = equal(cookieValue(request, COOKIE), token);
+  const owner = await checkSession(password, cookieValue(request, COOKIE));
 
   // Sign in with the password.
   if (url.pathname === '/__dsm_login' && request.method === 'POST') {
     const form = await request.formData();
     const next = safeNext(form.get('next'));
     if (form.get('password') === password) {
+      const issued = Math.floor(Date.now() / 1000);
+      const session = `${issued}.${await hmac(`dsm-session:${password}`, String(issued))}`;
       return new Response(null, {
         status: 303,
         headers: {
           location: next,
-          'set-cookie': `${COOKIE}=${token}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Lax`,
+          'set-cookie': `${COOKIE}=${session}; Path=/; Max-Age=${SESSION}; HttpOnly; Secure; SameSite=Lax`,
           'cache-control': 'no-store',
         },
       });
