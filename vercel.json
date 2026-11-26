@@ -3,5 +3,8 @@
   "framework": "storybook",
   "installCommand": "npm ci",
   "buildCommand": "npm run build-storybook",
-  "outputDirectory": "storybook-static"
+  "outputDirectory": "storybook-static",
+  "proxy": {
+    "entrypoint": "middleware.js"
+  }
 }
